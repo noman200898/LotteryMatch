@@ -8,6 +8,6 @@ package bd.com.nr13.lotterymatch.Helper;
 public interface AppConstant {
 
     String LOGTAG = "LotteryMatch";
-    int LOTTERY_TYPE_MY_NUM = 0;
-    int LOTTERY_TYPE_WIN_NUM = 1;
+    int LOTTERY_TYPE_MY_NUM = 1;
+    int LOTTERY_TYPE_WIN_NUM = 2;
 }

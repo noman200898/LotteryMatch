@@ -10,10 +10,29 @@
         android:id="@+id/textView"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginStart="10dp"
-        android:text="@string/text_view_demo_text"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
         android:gravity="center_vertical"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/text_view_demo_text"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton_edit"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton style="@style/Widget.AppCompat.Button.Borderless"
+        android:id="@+id/imageButton_edit"
+        android:layout_width="40dp"
+        android:layout_height="50dp"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton_delete"
+        android:tint="@color/colorAccent"
+        app:srcCompat="@mipmap/ic_edit_24dp" />
+
+    <ImageButton style="@style/Widget.AppCompat.Button.Borderless"
+        android:id="@+id/imageButton_delete"
+        android:layout_width="40dp"
+        android:layout_height="50dp"
+        app:layout_constraintStart_toEndOf="@+id/imageButton_edit"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:tint="@color/colorAccent"
+        app:srcCompat="@mipmap/ic_cross_24dp" />
+
 </android.support.constraint.ConstraintLayout>

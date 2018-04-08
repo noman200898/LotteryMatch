@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     RecyclerView.LayoutManager mLayoutManager;
-    private List<String> myDataset = new ArrayList<>();
+    private List<Lottery> myDataset = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,21 +65,32 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, AddActivity.class));
             }
         });
-        prepareData();
+
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-       // testDBMethods();
+        prepareData();
     }
 
     private void prepareData(){
-        for (int i=1; i < 21; i++) {
-            myDataset.add("000000"+i);
-        }
-        mAdapter.notifyDataSetChanged();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                myDataset.clear();
+                myDataset.addAll(DBHelper.on().getAllLottery(AppConstant.LOTTERY_TYPE_MY_NUM));
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mAdapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        }).start();
+
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -110,8 +121,7 @@ public class MainActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                DBHelper.on().addNumber(lottery);
-                DBHelper.on().getNumber();
+
             }
         }).start();
 
