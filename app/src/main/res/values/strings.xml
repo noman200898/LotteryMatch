@@ -3,6 +3,8 @@
     <string name="title_my_number">My number</string>
     <string name="title_win_number">Win number</string>
     <string name="title_notifications">Notifications</string>
+    <string name="title_add_number">Add Number</string>
+    <string name="title_save">Save</string>
     <string name="text_view_demo_text">Demo text</string>
 
 </resources>
