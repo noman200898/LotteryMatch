@@ -1,14 +1,20 @@
 package bd.com.nr13.lotterymatch;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
+import bd.com.nr13.lotterymatch.Helper.AppConstant;
+import bd.com.nr13.lotterymatch.Helper.DBHelper;
+import bd.com.nr13.lotterymatch.addNumber.AddActivity;
 import bd.com.nr13.lotterymatch.dbmanger.Lottery;
 
 /**
@@ -19,6 +25,7 @@ import bd.com.nr13.lotterymatch.dbmanger.Lottery;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
 
     private List<Lottery> mDataSet;
+    private Context mContext;
 
     MyAdapter(List<Lottery> mDataSet) {
         this.mDataSet = mDataSet;
@@ -33,6 +40,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
             mTextView = itemView.findViewById(R.id.textView);
             editButton = itemView.findViewById(R.id.imageButton_edit);
             deleteButton = itemView.findViewById(R.id.imageButton_delete);
+            editButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position =  getAdapterPosition();
+                    Log.d(AppConstant.LOGTAG, "editButton.setOnClickListener "+position);
+                }
+            });
+
         }
     }
 
@@ -44,15 +59,34 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Lottery lottery =  mDataSet.get(position);
+        final Lottery lottery =  mDataSet.get(position);
         String number = lottery.getNumber();
         holder.mTextView.setText(number);
-
-        
+        final int index = position;
+        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(AppConstant.LOGTAG, "deleteButton.setOnClickListener "+ index);
+                removeDataAt(index, lottery);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return mDataSet.size();
+    }
+
+    private void removeDataAt(final int position, final  Lottery lottery) {
+        mDataSet.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, mDataSet.size());
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                DBHelper.on().deleteLottery(lottery);
+            }
+        }).start();
     }
 }

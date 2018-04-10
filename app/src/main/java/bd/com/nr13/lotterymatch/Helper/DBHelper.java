@@ -54,7 +54,7 @@ public class DBHelper {
         }
     }
 
-    public void deleteNumber(final Lottery lottery){
+    public void deleteLottery(final Lottery lottery){
         if (lottery != null && appDatabase != null){
             long success = appDatabase.lotteryDao().deleteLottery(lottery);
             Log.d(AppConstant.LOGTAG, "deleteNumber "+ success);
