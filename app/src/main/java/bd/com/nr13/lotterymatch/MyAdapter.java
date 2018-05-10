@@ -89,4 +89,20 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
             }
         }).start();
     }
+
+    // Filter Class
+//    public void filter(String charText) {
+//        charText = charText.toLowerCase(Locale.getDefault());
+//        animalNamesList.clear();
+//        if (charText.length() == 0) {
+//            animalNamesList.addAll(arraylist);
+//        } else {
+//            for (AnimalNames wp : arraylist) {
+//                if (wp.getAnimalName().toLowerCase(Locale.getDefault()).contains(charText)) {
+//                    animalNamesList.add(wp);
+//                }
+//            }
+//        }
+//        notifyDataSetChanged();
+//    }
 }

@@ -1,5 +1,7 @@
 package bd.com.nr13.lotterymatch;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,7 +11,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -28,7 +34,7 @@ import bd.com.nr13.lotterymatch.dbmanger.Lottery;
  * Copyright (c) 2018, nr13.com. All rights reserved.
  */
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
 
     RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -39,10 +45,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        if (getSupportActionBar() != null){
-//            getSupportActionBar().hide();
-//        }
-        // mTextMessage = (TextView) findViewById(R.id.message);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.app_name);
+        setSupportActionBar(toolbar);
+
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
@@ -73,6 +80,36 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         prepareData();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.toolbar_top_menu, menu);
+
+        MenuItem searchViewItem = menu.findItem(R.id.menuSearch);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        final SearchView searchView = (SearchView) searchViewItem.getActionView();
+
+        searchView.setQueryHint("Search number");
+        if (searchManager != null)
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(true);
+        searchView.setOnQueryTextListener(this);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.menuAbout:
+                break;
+            case R.id.menuSettings:
+                break;
+            case R.id.menuLogout:
+                break;
+        }
+        return true;
     }
 
     private void prepareData(){
@@ -126,5 +163,18 @@ public class MainActivity extends AppCompatActivity {
         }).start();
 
 
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        String text = newText;
+       // mAdapter.filter(text);
+        return false;
     }
 }
