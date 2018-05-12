@@ -72,8 +72,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 startActivity(new Intent(MainActivity.this, AddActivity.class));
             }
         });
-
-
     }
 
     @Override
@@ -174,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     @Override
     public boolean onQueryTextChange(String newText) {
         String text = newText;
-       // mAdapter.filter(text);
+        mAdapter.filter(text);
         return false;
     }
 }

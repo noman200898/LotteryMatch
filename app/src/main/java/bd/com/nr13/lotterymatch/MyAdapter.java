@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
+import java.util.Locale;
 
 import bd.com.nr13.lotterymatch.Helper.AppConstant;
 import bd.com.nr13.lotterymatch.Helper.DBHelper;
@@ -24,14 +25,14 @@ import bd.com.nr13.lotterymatch.dbmanger.Lottery;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
 
-    private List<Lottery> mDataSet;
-    private Context mContext;
+    private List<Lottery> mDataSet, mainDataSet;
 
     MyAdapter(List<Lottery> mDataSet) {
         this.mDataSet = mDataSet;
+        this.mainDataSet = mDataSet;
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder{
         TextView mTextView;
         ImageButton editButton;
         ImageButton deleteButton;
@@ -91,18 +92,18 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
     }
 
     // Filter Class
-//    public void filter(String charText) {
-//        charText = charText.toLowerCase(Locale.getDefault());
-//        animalNamesList.clear();
-//        if (charText.length() == 0) {
-//            animalNamesList.addAll(arraylist);
-//        } else {
-//            for (AnimalNames wp : arraylist) {
-//                if (wp.getAnimalName().toLowerCase(Locale.getDefault()).contains(charText)) {
-//                    animalNamesList.add(wp);
-//                }
-//            }
-//        }
-//        notifyDataSetChanged();
-//    }
+    public void filter(String charText) {
+        charText = charText.toLowerCase(Locale.getDefault());
+        mainDataSet.clear();
+        if (charText.length() == 0) {
+            mainDataSet.addAll(mainDataSet);
+        } else {
+            for (Lottery wp : mainDataSet) {
+                if (wp.getNumber().toLowerCase(Locale.getDefault()).contains(charText)) {
+                    mainDataSet.add(wp);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
 }
