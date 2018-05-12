@@ -3,6 +3,7 @@ package bd.com.nr13.lotterymatch;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -37,7 +38,7 @@ import bd.com.nr13.lotterymatch.dbmanger.Lottery;
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
 
     RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private MyAdapter mAdapter;
     RecyclerView.LayoutManager mLayoutManager;
     private List<Lottery> myDataset = new ArrayList<>();
 
@@ -78,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     protected void onResume() {
         super.onResume();
         prepareData();
+
     }
 
     @Override
@@ -92,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         searchView.setQueryHint("Search number");
         if (searchManager != null)
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
         searchView.setIconifiedByDefault(true);
         searchView.setOnQueryTextListener(this);
         return true;
@@ -121,6 +124,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                     @Override
                     public void run() {
                         mAdapter.notifyDataSetChanged();
+                        mAdapter.fullDataSet = new ArrayList<>();
+                        mAdapter.fullDataSet.addAll(myDataset);
                     }
                 });
             }
@@ -162,6 +167,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
 
     }
+
 
     @Override
     public boolean onQueryTextSubmit(String query) {

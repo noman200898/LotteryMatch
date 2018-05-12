@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -25,11 +26,13 @@ import bd.com.nr13.lotterymatch.dbmanger.Lottery;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
 
-    private List<Lottery> mDataSet, mainDataSet;
+    private List<Lottery> mDataSet;
+    public ArrayList<Lottery>  fullDataSet;
 
-    MyAdapter(List<Lottery> mDataSet) {
-        this.mDataSet = mDataSet;
-        this.mainDataSet = mDataSet;
+    MyAdapter(List<Lottery> lotteryList) {
+        this.mDataSet = lotteryList;
+       // fullDataSet = new ArrayList<>();
+        //fullDataSet.addAll(mDataSet);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
@@ -94,13 +97,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
     // Filter Class
     public void filter(String charText) {
         charText = charText.toLowerCase(Locale.getDefault());
-        mainDataSet.clear();
+        mDataSet.clear();
         if (charText.length() == 0) {
-            mainDataSet.addAll(mainDataSet);
+            mDataSet.addAll(fullDataSet);
         } else {
-            for (Lottery wp : mainDataSet) {
+            for (Lottery wp : fullDataSet) {
                 if (wp.getNumber().toLowerCase(Locale.getDefault()).contains(charText)) {
-                    mainDataSet.add(wp);
+                    mDataSet.add(wp);
                 }
             }
         }

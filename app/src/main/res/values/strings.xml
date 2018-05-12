@@ -7,4 +7,11 @@
     <string name="title_save">Save</string>
     <string name="text_view_demo_text">Demo text</string>
 
+    <string name="menu_title_search">Search</string>
+    <string name="menu_title_sort_atoz">Sort newest</string>
+    <string name="menu_title_sort_ztoa">Sort oldest</string>
+    <string name="menu_title_setting">Setting</string>
+
+
+
 </resources>
