@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private MyAdapter mAdapter;
     RecyclerView.LayoutManager mLayoutManager;
     private List<Lottery> myDataset = new ArrayList<>();
+    private boolean isWinNumberTabSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new MyAdapter(myDataset);
+        mAdapter = new MyAdapter(myDataset, this);
         mRecyclerView.setAdapter(mAdapter);
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),
@@ -70,7 +71,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, AddActivity.class));
+                Intent intent = new Intent(MainActivity.this, AddActivity.class);
+                intent.putExtra(AppConstant.WIN_NUMBER_SELECTED_KEY, isWinNumberTabSelected);
+                startActivity(intent);
             }
         });
     }
@@ -91,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         final SearchView searchView = (SearchView) searchViewItem.getActionView();
 
-        searchView.setQueryHint("Search number");
+        searchView.setQueryHint(AppConstant.SEARCH_BAR_HINT);
         if (searchManager != null)
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
@@ -119,7 +122,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             @Override
             public void run() {
                 myDataset.clear();
-                myDataset.addAll(DBHelper.on().getAllLottery(AppConstant.LOTTERY_TYPE_MY_NUM));
+                if (isWinNumberTabSelected){
+                    myDataset.addAll(DBHelper.on().getAllLottery(AppConstant.LOTTERY_TYPE_WIN_NUM));
+                }else {
+                    myDataset.addAll(DBHelper.on().getAllLottery(AppConstant.LOTTERY_TYPE_MY_NUM));
+                }
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -139,17 +146,17 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    //mTextMessage.setText(R.string.title_my_number);
-                    return true;
-                case R.id.navigation_dashboard:
-                   // mTextMessage.setText(R.string.title_win_number);
-                    return true;
-//                case R.id.navigation_notifications:
-//                    mTextMessage.setText(R.string.title_notifications);
-//                    return true;
+                case R.id.navigation_my_number:
+                    item.setChecked(true);
+                    isWinNumberTabSelected = false;
+                    break;
+                case R.id.navigation_win_number:
+                    item.setChecked(true);
+                    isWinNumberTabSelected = true;
+                    break;
             }
-            return false;
+            prepareData();
+            return true;
         }
     };
 

@@ -41,17 +41,19 @@ public class DBHelper {
     public List<Lottery> getAllLottery(int type){
         List<Lottery> lotteryList = new ArrayList<>();
         if (appDatabase != null && type != 0){
-            lotteryList = appDatabase.lotteryDao().selectAllLottery();
+            lotteryList = appDatabase.lotteryDao().selectAllLottery(type);
             Log.d(AppConstant.LOGTAG, "getNumber "+lotteryList.size());
         }
         return lotteryList;
     }
 
-    public void updateNumber(final Lottery lottery){
+    public int updateNumber(final Lottery lottery){
+        int result = -1;
         if (lottery != null && appDatabase != null){
-            int success = appDatabase.lotteryDao().updateLottery(lottery);
-            Log.d(AppConstant.LOGTAG, "updateNumber "+ success);
+            result = appDatabase.lotteryDao().updateLottery(lottery);
+            Log.d(AppConstant.LOGTAG, "updateNumber "+ result);
         }
+        return result;
     }
 
     public void deleteLottery(final Lottery lottery){

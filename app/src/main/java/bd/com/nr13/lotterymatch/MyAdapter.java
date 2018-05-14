@@ -1,6 +1,8 @@
 package bd.com.nr13.lotterymatch;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,9 +30,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
 
     private List<Lottery> mDataSet;
     public ArrayList<Lottery>  fullDataSet;
+    private Context mContext;
 
-    MyAdapter(List<Lottery> lotteryList) {
+
+    MyAdapter(List<Lottery> lotteryList, Context context) {
         this.mDataSet = lotteryList;
+        this.mContext = context;
        // fullDataSet = new ArrayList<>();
         //fullDataSet.addAll(mDataSet);
     }
@@ -74,6 +79,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
                 removeDataAt(index, lottery);
             }
         });
+        holder.editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(AppConstant.LOGTAG, "editButton.setOnClickListener "+ index);
+                Lottery lottery1 = mDataSet.get(index);
+                Intent intent = new Intent(mContext, AddActivity.class);
+                intent.putExtra(AppConstant.LOTTERY_OBJECT, (Parcelable) lottery1);
+                mContext.startActivity(intent);
+            }
+        });
+
     }
 
     @Override

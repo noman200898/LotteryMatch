@@ -19,8 +19,8 @@ public interface LotteryDao {
     @Insert
     long insertLottery(Lottery lottery);
 
-    @Query("SELECT * FROM lottery")
-    List<Lottery> selectAllLottery();
+    @Query("SELECT * FROM lottery WHERE type LIKE:type")
+    List<Lottery> selectAllLottery(int type);
 
     @Update
     int updateLottery(Lottery lottery);
