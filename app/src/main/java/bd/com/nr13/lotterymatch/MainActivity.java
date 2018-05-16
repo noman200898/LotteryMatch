@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bd.com.nr13.lotterymatch.Helper.AppConstant;
+import bd.com.nr13.lotterymatch.Helper.CommonHelper;
 import bd.com.nr13.lotterymatch.Helper.DBHelper;
 import bd.com.nr13.lotterymatch.addNumber.AddActivity;
 import bd.com.nr13.lotterymatch.dbmanger.AppDatabase;
@@ -71,9 +72,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, AddActivity.class);
-                intent.putExtra(AppConstant.WIN_NUMBER_SELECTED_KEY, isWinNumberTabSelected);
-                startActivity(intent);
+                CommonHelper.splitTextByComma("");
+//                Intent intent = new Intent(MainActivity.this, AddActivity.class);
+//                intent.putExtra(AppConstant.WIN_NUMBER_SELECTED_KEY, isWinNumberTabSelected);
+//                startActivity(intent);
             }
         });
     }

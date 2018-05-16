@@ -95,7 +95,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         onBackPressed();
         return true;
     }
-    
+
     private void saveInputNumber() {
         final String inputText = String.valueOf(editTextAdd.getText());
         if (inputText == null || inputText.equals("")) {
@@ -118,7 +118,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                             @Override
                             public void run() {
                                 editTextAdd.setText("");
-                                Toast.makeText(AddActivity.this, "Number Added successfully", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AddActivity.this,AppConstant.TOAST_FOR_NUMBER_ADDED, Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -143,7 +143,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                             @Override
                             public void run() {
                                 editTextAdd.setText("");
-                                Toast.makeText(AddActivity.this, "Number update successfully", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AddActivity.this, AppConstant.TOAST_FOR_NUMBER_UPDATED, Toast.LENGTH_SHORT).show();
                                 onBackPressed();
                             }
                         });
