@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginRight="5dp"
+    android:layout_marginLeft="5dp">
 
     <TextView
         android:id="@+id/textView"
@@ -17,22 +19,26 @@
         app:layout_constraintEnd_toStartOf="@+id/imageButton_edit"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageButton style="@style/Widget.AppCompat.Button.Borderless"
+    <ImageButton
         android:id="@+id/imageButton_edit"
-        android:layout_width="40dp"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="30dp"
         android:layout_height="50dp"
-        app:layout_constraintStart_toEndOf="@+id/textView"
+        android:tint="@color/colorAccent"
         app:layout_constraintEnd_toStartOf="@+id/imageButton_delete"
-        android:tint="@color/colorAccent"
-        app:srcCompat="@mipmap/ic_edit_24dp" />
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:srcCompat="@mipmap/ic_edit" />
 
-    <ImageButton style="@style/Widget.AppCompat.Button.Borderless"
+    <ImageButton
         android:id="@+id/imageButton_delete"
-        android:layout_width="40dp"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="30dp"
         android:layout_height="50dp"
-        app:layout_constraintStart_toEndOf="@+id/imageButton_edit"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:adjustViewBounds="false"
+        android:cropToPadding="false"
         android:tint="@color/colorAccent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageButton_edit"
         app:srcCompat="@mipmap/ic_cross_24dp" />
 
 </android.support.constraint.ConstraintLayout>

@@ -6,6 +6,7 @@
     <string name="title_add_number">Add Number</string>
     <string name="title_save">Save</string>
     <string name="title_update">Update</string>
+    <string name="title_ok">OK</string>
     <string name="text_view_demo_text">Demo text</string>
 
     <string name="menu_title_search">Search</string>
@@ -13,6 +14,9 @@
     <string name="menu_title_sort_ztoa">Sort oldest</string>
     <string name="menu_title_setting">Setting</string>
 
+    <string name="toast_message_for_invalid_number">Sorry! Input number is not valid.</string>
 
+    <string name="title_add_number_hint">Add multiple number</string>
+    <string name="message_add_number_hint">Add numbers with comma separator(101,102,103) or with hyphen(101–3).</string>
 
 </resources>

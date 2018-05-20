@@ -72,10 +72,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CommonHelper.splitTextByComma("");
-//                Intent intent = new Intent(MainActivity.this, AddActivity.class);
-//                intent.putExtra(AppConstant.WIN_NUMBER_SELECTED_KEY, isWinNumberTabSelected);
-//                startActivity(intent);
+                Intent intent = new Intent(MainActivity.this, AddActivity.class);
+                intent.putExtra(AppConstant.WIN_NUMBER_SELECTED_KEY, isWinNumberTabSelected);
+                startActivity(intent);
             }
         });
     }

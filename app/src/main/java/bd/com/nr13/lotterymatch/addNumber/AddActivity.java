@@ -1,10 +1,12 @@
 package bd.com.nr13.lotterymatch.addNumber;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -12,10 +14,14 @@ import android.view.ActionMode;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import java.util.List;
+
 import bd.com.nr13.lotterymatch.Helper.AppConstant;
+import bd.com.nr13.lotterymatch.Helper.CommonHelper;
 import bd.com.nr13.lotterymatch.Helper.DBHelper;
 import bd.com.nr13.lotterymatch.R;
 import bd.com.nr13.lotterymatch.dbmanger.Lottery;
@@ -29,6 +35,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
 
     EditText editTextAdd;
     Button buttonSave;
+    ImageButton buttonInfo;
     private boolean isWinNumberTabSelected;
     private Lottery editingLottery;
 
@@ -48,7 +55,9 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
 
         editTextAdd = findViewById(R.id.edit_text_add_lottery);
         buttonSave = findViewById(R.id.button_save);
+        buttonInfo = findViewById(R.id.button_info);
         buttonSave.setOnClickListener(this);
+        buttonInfo.setOnClickListener(this);
 
         //Bundle extras = getIntent().getExtras();
         Intent intent = getIntent();
@@ -80,12 +89,15 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
     public void onClick(View view) {
         switch (view.getId()) {
             case (R.id.button_save):
-                Log.d(AppConstant.LOGTAG, "onClick " + "save button");
                 if (editingLottery == null){
                     saveInputNumber();
                 }else {
                     updateInputNumber();
                 }
+                break;
+            case (R.id.button_info):
+                Log.d(AppConstant.LOGTAG, "onClick " + "info button");
+                showHint();
                 break;
         }
     }
@@ -104,15 +116,19 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-
-                    Lottery lottery = new Lottery();
-                    lottery.setNumber(inputText);
-                    if (isWinNumberTabSelected) {
-                        lottery.setType(AppConstant.LOTTERY_TYPE_WIN_NUM);
-                    } else {
-                        lottery.setType(AppConstant.LOTTERY_TYPE_MY_NUM);
+                    boolean success = false;
+                    List<String> numberList = CommonHelper.splitText(inputText);
+                    for (String number : numberList){
+                        Lottery lottery = new Lottery();
+                        lottery.setNumber(number);
+                        if (isWinNumberTabSelected) {
+                            lottery.setType(AppConstant.LOTTERY_TYPE_WIN_NUM);
+                        } else {
+                            lottery.setType(AppConstant.LOTTERY_TYPE_MY_NUM);
+                        }
+                        success = DBHelper.on().addLottery(lottery);
                     }
-                    boolean success = DBHelper.on().addLottery(lottery);
+
                     if (success) {
                         runOnUiThread(new Runnable() {
                             @Override
@@ -152,5 +168,19 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
             }).start();
 
         }
+    }
+
+    private void showHint(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle(R.string.title_add_number_hint)
+                .setMessage(R.string.message_add_number_hint)
+                .setNegativeButton(R.string.title_ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                    }
+                });
+        // Create the AlertDialog object and return it
+        builder.create().show();
     }
 }
